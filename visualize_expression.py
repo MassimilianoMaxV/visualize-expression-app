@@ -2,6 +2,7 @@ import streamlit as st
 import networkx as nx
 from pyvis.network import Network
 import re
+import os
 
 # Function to parse and build a graph from the logical expression
 def build_logical_graph(expression, graph=None, parent=None, edge_label=""):
@@ -68,7 +69,7 @@ def visualize_graph(graph):
 
     # Save and display the graph
     path = "./graph.html"
-    net.show(path)
+    net.write_html(path)  # Use write_html instead of show to generate the HTML file
     
     return path
 
@@ -101,8 +102,9 @@ def main():
         
         # Visualize the graph and show the output in Streamlit
         html_path = visualize_graph(graph)
-        st.write(f"Visualized expression: {expr_input}")
-        st.components.v1.html(open(html_path, 'r').read(), height=600)
+        with open(html_path, 'r', encoding='utf-8') as f:
+            html_content = f.read()
+        st.components.v1.html(html_content, height=600)
 
 if __name__ == '__main__':
     main()
