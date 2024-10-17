@@ -100,6 +100,10 @@ def main():
         # Build the graph
         graph = build_logical_graph(expr_input.strip())
         
+        # DEBUG: Print nodes and edges to verify the graph
+        st.write("Graph Nodes:", list(graph.nodes(data=True)))
+        st.write("Graph Edges:", list(graph.edges(data=True)))
+        
         # Visualize the graph and show the output in Streamlit
         html_path = visualize_graph(graph)
         with open(html_path, 'r', encoding='utf-8') as f:
